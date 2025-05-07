@@ -33,4 +33,4 @@ COPY --from=build /app/target/myapp-0.0.1-SNAPSHOT.jar  /app/myapp-0.0.1-SNAPSHO
 EXPOSE 8081
 
 # Run the application
-CMD ["sh" "-c" "java -jar myapp-0.0.1-SNAPSHOT.jar > /app/logs/app.log 2>&1"]
+CMD ["sh","-c","java -jar myapp-0.0.1-SNAPSHOT.jar > /app/logs/app.log 2>&1"]
