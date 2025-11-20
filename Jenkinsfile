@@ -28,7 +28,9 @@ pipeline {
                   pkill -f myapp.jar || true
 
                   # deploy new JAR
+                  echo "=== Starting deploy at $(date)" >> deploy.log
                   nohup java -jar target/myapp.jar > app.log 2>&1 &
+                  echo "PID: $(pgrep -f myapp.jar)" >> deploy.log
                 '''
             }
         }
