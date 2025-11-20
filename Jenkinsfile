@@ -1,37 +1,44 @@
 pipeline {
-    agent any
-    
-    environment {
-        APP_DIR='/var/lib/jenkins/workspace/scripted_pipeline/demo-app'
-        JAR_FILE='myapp-0.0.1-SNAPSHOT.jar'
-    }
-
+    agent { label 'built-in' }               // run pipeline on master for build steps
     stages {
+        
         stage('Clean Workspace'){
             steps{
                 cleanWs()
             }
         }
-        stage('Cloning Git Repo') {
+        stage('Checkout') {
             steps {
-                script {
-                    sh 'git clone "https://github.com/neerajbalodi/demo-app.git"'
-                }
+                checkout scm
             }
         }
-        stage('Build Application') {
+        stage('Build') {
             steps {
-                script {
-                    sh 'cd demo-app && mvn clean install'
-                }
+                sh './mvnw clean package -DskipTests'
+                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                stash name: 'app-jar', includes: 'target/*.jar'
             }
         }
-        stage('Run Application') {
+        stage('Deploy') {
+            agent { label 'ubuntu-worker' }      // switch to worker node for deploy
             steps {
-                script {
-                    sh 'cd $APP_DIR/target'
-                }
+                unstash 'app-jar'
+                sh '''
+                  # stop existing app (if applicable)
+                  pkill -f myapp.jar || true
+
+                  # deploy new JAR
+                  nohup java -jar target/myapp.jar > app.log 2>&1 &
+                '''
             }
+        }
+    }
+    post {
+        success {
+            echo "Deployment succeeded for ${env.BUILD_NUMBER}"
+        }
+        failure {
+            echo "Deployment FAILED for ${env.BUILD_NUMBER}"
         }
     }
 }
