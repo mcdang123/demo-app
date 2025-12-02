@@ -54,7 +54,7 @@
 	<distributionManagement>
     <repository>
       <id>team-synergistic-releases</id>
-      <url>http://16.16.97.7:8081/repository/team-synergistic-releases/</url>
+      <url>http://http://16.16.120.28:8081/repository/synergistic-it/</url>
     </repository>
     <snapshotRepository>
       <id>team-synergistic-snapshots</id>
