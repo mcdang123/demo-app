@@ -58,7 +58,7 @@
     </repository>
     <snapshotRepository>
       <id>synergistic-it-snapshots</id>
-      <url>http://16.16.120.28:8081/repository/synergistic-it/</url>
+      <url>http://16.16.120.28:8081/repository/synergistic-it-snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
 
