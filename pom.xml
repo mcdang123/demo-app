@@ -56,10 +56,10 @@
       <id>synergistic-it</id>
       <url>http://16.16.120.28:8081/repository/synergistic-it//</url>
     </repository>
-    <!-- <snapshotRepository>
+    <snapshotRepository>
       <id>synergistic-it-snapshots</id>
       <url>http://16.16.120.28:8081/repository/synergistic-it-snapshots/</url>
-    </snapshotRepository> -->
+    </snapshotRepository>
   </distributionManagement>
 
 </project>
